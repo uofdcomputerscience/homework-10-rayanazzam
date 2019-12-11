@@ -10,3 +10,27 @@ import Foundation
 
 
 // Call your function in a way that will return a success result, and handle the value.
+
+enum LogInCredentialError: Error {
+    case inputIsTooShort
+    case inputIsTooLong
+    case inputHasIllegalCharacters
+}
+
+func validateInput(value: String) -> Result<String, Error> {
+    if (value.count > 3) {
+        return .success("success!")
+    }
+    return .failure(LogInCredentialError.inputIsTooShort)
+}
+
+let result = validateInput(value: "abcd")
+//let result = validateInput(value: "ab")
+
+switch result {
+    
+case .success(let string):
+    print("string: \(string)")
+case .failure(let error):
+    print(error)
+}
